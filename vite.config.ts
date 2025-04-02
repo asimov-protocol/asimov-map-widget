@@ -13,12 +13,13 @@ export default defineConfig({
       formats: ['es'],
     },
     rollupOptions: {
-      external: ['react', 'react/jsx-runtime', 'react-dom'],
+      external: ['react', 'react/jsx-runtime', 'react-dom', 'tailwindcss'],
       output: {
         globals: {
           react: 'React',
           'react/jsx-runtime': 'react/jsx-runtime',
           'react-dom': 'ReactDOM',
+          tailwindcss: 'tailwindcss',
         },
       },
     },
