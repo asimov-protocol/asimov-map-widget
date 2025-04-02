@@ -1,54 +1,36 @@
-# React + TypeScript + Vite
+# Asimov Map Module
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Usage Examples
 
-Currently, two official plugins are available:
+Below are basic examples of how to use some of the main components in this library within a React application.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### MapView
 
-## Expanding the ESLint configuration
+```tsx
+import React from 'react'
+import { MapView } from 'asimov-map-module'
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+export function MyMap() {
+  return (
+    <MapView
+      data={{ results: { bindings: [] } }} // Provide SPARQL data
+      mapCenter={[0, 0]}
+      initialZoom={2}
+      showHeatmap={false}
+      onFeatureClick={(feature) => console.log('Feature:', feature)}
+      showPopup={true}
+      className="h-96 w-full"
+    />
+  )
+}
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Installation
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+To use this module, make sure you install the latest version of Tailwind CSS:
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```bash
+npm install tailwindcss@latest
 ```
+
+And follow the [Tailwind CSS installation guide](https://tailwindcss.com/docs/installation) to set it up in your project.
