@@ -6,7 +6,7 @@
   "files": [
     "dist"
   ],
-  "main": "./dist/asimov-map-module/umd.cjs",
+  "main": "./dist/asimov-map-module.js",
   "module": "./dist/asimov-map-module.js",
   "scripts": {
     "dev": "vite",
