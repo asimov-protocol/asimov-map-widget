@@ -1,13 +1,14 @@
 {
   "name": "asimov-map-module",
   "private": true,
-  "version": "1.0.2",
+  "version": "1.0.0",
   "type": "module",
   "files": [
     "dist"
   ],
   "main": "./dist/asimov-map-module.js",
   "module": "./dist/asimov-map-module.js",
+  "types": "./dist/main.d.ts",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
