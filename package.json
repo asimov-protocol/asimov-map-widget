@@ -12,7 +12,8 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "prepare": "tsc -b && vite build"
   },
   "dependencies": {
     "ol": "^10.5.0",
