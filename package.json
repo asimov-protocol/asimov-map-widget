@@ -1,13 +1,13 @@
 {
-  "name": "asimov-map-module",
+  "name": "asimov-map-widget",
   "private": true,
   "version": "1.0.0",
   "type": "module",
   "files": [
     "dist"
   ],
-  "main": "./dist/asimov-map-module.js",
-  "module": "./dist/asimov-map-module.js",
+  "main": "./dist/asimov-map-widget.js",
+  "module": "./dist/asimov-map-widget.js",
   "types": "./dist/main.d.ts",
   "scripts": {
     "dev": "vite",
