@@ -1,19 +1,19 @@
-# ASIMOV Map Module
+# ASIMOV Map Widget
 
 > **Note:** This package isn’t published to npm. You can install it directly from GitHub.
 
 ## Installation from GitHub
 
 ```bash
-npm install --save git+https://github.com/asimov-protocol/asimov-map-module.git
+npm install --save git+https://github.com/asimov-protocol/asimov-map-widget.git
 ```
 
 ## Usage Example
 
 ```tsx
 import React from 'react'
-import { MapView } from 'asimov-map-module'
-import 'asimov-map-module/dist/asimov-map-module.css'
+import { MapView } from 'asimov-map-widget'
+import 'asimov-map-widget/dist/asimov-map-widget.css'
 
 export function MyMap() {
   return (
