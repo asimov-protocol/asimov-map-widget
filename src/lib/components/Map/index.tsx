@@ -96,6 +96,7 @@ function getPolygonCentroid(geom: Geometry): Point | null {
  * @property {(feature: OLFeature<Geometry>) => void} [onFeatureClick] - Callback invoked when a feature is clicked on the map.
  * @property {boolean} [showPopup] - If true, enables the popup overlay on feature click. Defaults to true.
  * @property {string} [className] - Additional CSS classes for the map container.
+ * @property {React.CSSProperties} [style] - Inline styles for the map container.
  */
 export interface AsimovMapViewProps extends DataMapViewProps {
   mapCenter?: [number, number]
@@ -104,6 +105,7 @@ export interface AsimovMapViewProps extends DataMapViewProps {
   onFeatureClick?: (feature: OLFeature<Geometry>) => void
   showPopup?: boolean
   className?: string
+  style?: React.CSSProperties
 }
 
 /**
@@ -121,6 +123,7 @@ export const MapView: React.FC<AsimovMapViewProps> = ({
   onFeatureClick,
   showPopup = true,
   className = '',
+  style,
 }) => {
   const mapRef = useRef<HTMLDivElement | null>(null)
   const mapInstanceRef = useRef<OlMap | null>(null)
@@ -337,5 +340,11 @@ export const MapView: React.FC<AsimovMapViewProps> = ({
     }
   }, [data])
 
-  return <div ref={mapRef} className={`w-full h-[500px] relative ${className}`} />
+  return (
+    <div
+      ref={mapRef}
+      style={style}
+      className={`w-screen h-screen relative ${className}`}
+    />
+  )
 }
