@@ -29,14 +29,8 @@ export interface SparqlBinding {
   }
 }
 
-export interface SparqlData {
-  results: {
-    bindings: SparqlBinding[]
-  }
-}
-
 export interface DataMapViewProps {
-  data: SparqlData
+  data: SparqlBinding[]
   exportJSON?: (data: Record<string, unknown>, fileName?: string) => void
 }
 
@@ -94,7 +88,7 @@ function getPolygonCentroid(geom: Geometry): Point | null {
 /**
  * Extended interface for the modular MapView component.
  *
- * @property {SparqlData} data - The SPARQL data to be displayed on the map.
+ * @property {SparqlBinding[]} data - The SPARQL data to be displayed on the map.
  * @property {(data: Record<string, unknown>, fileName?: string) => void} [exportJSON] - Callback when the export button is clicked in the map popup.
  * @property {[number, number]} [mapCenter] - Initial center of the map as [longitude, latitude]. Defaults to [0, 0].
  * @property {number} [initialZoom] - Initial zoom level of the map. Defaults to 2.
@@ -288,7 +282,7 @@ export const MapView: React.FC<AsimovMapViewProps> = ({
     heatmapSourceRef.current.clear()
 
     const wktFormat = new WKT()
-    data.results.bindings.forEach((item: SparqlBinding) => {
+    data.forEach((item: SparqlBinding) => {
       const wktValue = Object.keys(item)
         .map((key) => {
           if (item[key].datatype) return item[key].value
