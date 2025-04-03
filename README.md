@@ -1,5 +1,12 @@
 # Asimov Map Module
 
+## Installation
+
+
+```bash
+npm install asimov-map-module
+```
+
 ## Usage Examples
 
 Below are basic examples of how to use some of the main components in this library within a React application.
@@ -7,8 +14,9 @@ Below are basic examples of how to use some of the main components in this libra
 ### MapView
 
 ```tsx
-import React from 'react'
-import { MapView } from 'asimov-map-module'
+import React from 'react';
+import { MapView } from 'asimov-map-module';
+import 'asimov-map-module/dist/asimov-map-module.css';
 
 export function MyMap() {
   return (
@@ -24,13 +32,3 @@ export function MyMap() {
   )
 }
 ```
-
-## Installation
-
-To use this module, make sure you install the latest version of Tailwind CSS:
-
-```bash
-npm install tailwindcss@latest
-```
-
-And follow the [Tailwind CSS installation guide](https://tailwindcss.com/docs/installation) to set it up in your project.
