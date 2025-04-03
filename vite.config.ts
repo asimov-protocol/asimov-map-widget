@@ -16,8 +16,8 @@ export default defineConfig({
   build: {
     lib: {
       entry: resolve(__dirname, 'src/lib/main.ts'),
-      name: 'asimov-map-module',
-      fileName: "asimov-map-module",
+      name: 'asimov-map-widget',
+      fileName: "asimov-map-widget",
       formats: ['es'],
     },
     rollupOptions: {
