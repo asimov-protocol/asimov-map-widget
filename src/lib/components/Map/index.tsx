@@ -8,11 +8,13 @@ import TileLayer from 'ol/layer/Tile'
 import OSM from 'ol/source/OSM'
 import Overlay from 'ol/Overlay'
 import VectorSource from 'ol/source/Vector'
+import WebGLVector from 'ol/layer/WebGLVector'
 import { Vector as VectorLayer } from 'ol/layer'
 import HeatmapLayer from 'ol/layer/Heatmap'
 import WKT from 'ol/format/WKT'
 import OLFeature from 'ol/Feature'
 import Geometry from 'ol/geom/Geometry'
+import GeometryCollection from 'ol/geom/GeometryCollection'
 import Polygon from 'ol/geom/Polygon'
 import MultiPolygon from 'ol/geom/MultiPolygon'
 import Point from 'ol/geom/Point'
@@ -77,12 +79,33 @@ const highlightStyle = new Style({
  * @returns A Point representing the centroid, or null if not applicable.
  */
 function getPolygonCentroid(geom: Geometry): Point | null {
-  if (!(geom instanceof Polygon) && !(geom instanceof MultiPolygon)) {
-    return null
+  if (geom instanceof Polygon || geom instanceof MultiPolygon) {
+    const extent = geom.getExtent()
+    const center = getCenter(extent)
+    return new Point(center)
   }
-  const extent = geom.getExtent()
-  const center = getCenter(extent)
-  return new Point(center)
+  return null
+}
+
+/**
+ * Returns the centroid for a GeometryCollection.
+ * If the collection contains a Polygon or MultiPolygon, returns the centroid of the first such geometry.
+ * If the collection contains nested GeometryCollections, recursively searches for a Polygon or MultiPolygon.
+ *
+ * @param gc - The geometry collection.
+ * @returns A Point representing the centroid, or null if not applicable.
+ */
+function getCollectionCentroid(gc: GeometryCollection): Point | null {
+  for (const g of gc.getGeometries()) {
+    if (g instanceof Polygon || g instanceof MultiPolygon) {
+      const centroid = getPolygonCentroid(g)
+      if (centroid) return centroid
+    } else if (g instanceof GeometryCollection) {
+      const subCentroid = getCollectionCentroid(g)
+      if (subCentroid) return subCentroid
+    }
+  }
+  return null
 }
 
 /**
@@ -131,7 +154,47 @@ export const MapView: React.FC<AsimovMapViewProps> = ({
 
   const objectsSourceRef = useRef(new VectorSource())
   const heatmapSourceRef = useRef(new VectorSource())
-  const objectsLayerRef = useRef(new VectorLayer({ source: objectsSourceRef.current, style: defaultStyle }))
+
+  const pointsLayerRef = useRef(
+    new WebGLVector({
+      source: objectsSourceRef.current,
+      style: {
+        'circle-radius': [
+          'interpolate',
+          ['linear'],
+          ['get', 'population'],
+          40000,
+          4,
+          2000000,
+          14,
+        ],
+        'circle-fill-color': [
+          'match',
+          ['get', 'hover'],
+          1,
+          'rgba(0, 102, 255, 0.1)',
+          '#0066ff',
+        ],
+        'circle-opacity': [
+          'interpolate',
+          ['linear'],
+          ['get', 'population'],
+          40000,
+          0.6,
+          2000000,
+          0.92,
+        ],
+      },
+    }),
+  )
+
+  const objectsLayerRef = useRef(
+    new VectorLayer({
+      source: objectsSourceRef.current,
+      style: defaultStyle,
+    }),
+  )
+
   const heatmapLayerRef = useRef(
     new HeatmapLayer({
       source: heatmapSourceRef.current,
@@ -204,7 +267,7 @@ export const MapView: React.FC<AsimovMapViewProps> = ({
         center: fromLonLat(mapCenter),
         zoom: initialZoom,
       }),
-      layers: [new TileLayer({ source: new OSM() })],
+      layers: [new TileLayer({ source: new OSM() }), pointsLayerRef.current],
       overlays: popupOverlay ? [popupOverlay] : [],
     })
     mapInstanceRef.current = map
@@ -281,6 +344,8 @@ export const MapView: React.FC<AsimovMapViewProps> = ({
   }, [mapCenter, initialZoom, showHeatmap, showPopup, onFeatureClick, exportJSON])
 
   useEffect(() => {
+    if (!data || data.length === 0) return
+
     objectsSourceRef.current.clear()
     heatmapSourceRef.current.clear()
 
@@ -315,10 +380,18 @@ export const MapView: React.FC<AsimovMapViewProps> = ({
       objectsSourceRef.current.addFeature(polyFeature)
 
       const geom = polyFeature.getGeometry()
-      if (geom) {
+      if (geom instanceof Polygon || geom instanceof MultiPolygon) {
         const centroidPoint = getPolygonCentroid(geom)
         if (centroidPoint) {
           const centroidFeature = new OLFeature<Point>(centroidPoint)
+          centroidFeature.set('label', label)
+          centroidFeature.set('labels', labels)
+          heatmapSourceRef.current.addFeature(centroidFeature)
+        }
+      } else if (geom instanceof GeometryCollection) {
+        const collectionCentroid = getCollectionCentroid(geom)
+        if (collectionCentroid) {
+          const centroidFeature = new OLFeature<Point>(collectionCentroid)
           centroidFeature.set('label', label)
           centroidFeature.set('labels', labels)
           heatmapSourceRef.current.addFeature(centroidFeature)
@@ -340,11 +413,18 @@ export const MapView: React.FC<AsimovMapViewProps> = ({
     }
   }, [data])
 
+  if (!data || data.length === 0) {
+    return (
+      <div>Empty data</div>
+    )
+  }
+
   return (
     <div
       ref={mapRef}
       style={style}
       className={`w-screen h-screen relative ${className}`}
+      data-testid="open-street-map-element"
     />
   )
 }
