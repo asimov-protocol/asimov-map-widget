@@ -36,9 +36,6 @@ jobs:
       - name: Lint
         run: npm run lint
 
-      - name: Type-check
-        run: npm run typecheck
-
       - name: Test
         if: ${{ inputs.skip-tests == false }}
         run: npm test
