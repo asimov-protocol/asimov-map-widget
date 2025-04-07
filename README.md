@@ -2,6 +2,8 @@
 
 > **Note:** This package isn’t published to npm. You can install it directly from GitHub.
 
+<img width="866" alt="preview-screenshot" src="https://github.com/user-attachments/assets/c964f5ff-1d4d-4450-9592-aa31537c2076" />
+
 ## Installation from GitHub
 
 ```bash
@@ -37,8 +39,3 @@ export function MyMap() {
 | **showPopup**   | `boolean`                                       | `true`      | If true, shows a popup on feature click.                                                    |
 | **className**   | `string`                                        | `''`        | Additional CSS class names for the map container.                                           |
 | **style**       | `React.CSSProperties`                           | *none*      | Optional inline styles for the map container.                                               |
-
-## Preview
-
-
-<img width="866" alt="Знімок екрана 2025-04-03 о 19 53 54" src="https://github.com/user-attachments/assets/c964f5ff-1d4d-4450-9592-aa31537c2076" />
