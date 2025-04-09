@@ -3,7 +3,6 @@ import { render, screen } from '@testing-library/react'
 import { describe, it, vi, expect } from 'vitest'
 import { MapView } from '../index'
 
-// Mock OpenLayers modules
 vi.mock('ol/Map', () => {
   return {
     default: vi.fn().mockImplementation(() => ({
