@@ -1,5 +1,7 @@
 # ASIMOV Map Widget
 
+[![CI](https://github.com/asimov-protocol/asimov-map-widget/actions/workflows/ci.yml/badge.svg)](https://github.com/asimov-protocol/asimov-map-widget/actions/workflows/ci.yml)
+
 > **Note:** This package isn’t published to npm. You can install it directly from GitHub.
 
 <img width="866" alt="preview-screenshot" src="https://github.com/user-attachments/assets/c964f5ff-1d4d-4450-9592-aa31537c2076" />
