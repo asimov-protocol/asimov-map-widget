@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import 'ol/ol.css'
-import '../../style.css'
+import './style.css'
 import OlMap from 'ol/Map'
 import View from 'ol/View'
 import { fromLonLat } from 'ol/proj'

@@ -11,6 +11,7 @@ export default defineConfig({
     tailwindcss(),
     dts({
       tsconfigPath: './tsconfig.app.json',
+      exclude: ['src/App.tsx', 'src/main.tsx', 'src/index.css'],
     }),
   ],
   build: {
@@ -35,4 +36,13 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
   },
+  server: {
+    proxy: {
+      '/api': {
+        target: 'https://qlever.cs.uni-freiburg.de/api/osm-planet',
+        changeOrigin: true,
+        secure: false,
+      }
+    }
+  }
 });
