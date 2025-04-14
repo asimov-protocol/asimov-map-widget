@@ -41,7 +41,7 @@ SELECT ?region ?name ?geometry WHERE {
     };
 
     fetchData();
-  }, [sparqlQuery]);
+  }, []);
 
   return (
     <>
