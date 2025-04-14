@@ -47,3 +47,16 @@ export function MyMap() {
 | **showPopup**      | `boolean`                                     | `true`    | If true, shows a popup on feature click.                                                     |
 | **className**      | `string`                                      | `''`      | Additional CSS class names for the map container.                                            |
 | **style**          | `React.CSSProperties`                         | *none*    | Optional inline styles for the map container.                                                |
+
+
+## Local Development
+
+If you’d like to work with this repository directly, simply clone it and install its dependencies. Then, you can spin up the development server with the following commands:
+
+```bash
+git clone https://github.com/asimov-protocol/asimov-map-widget.git
+cd asimov-map-widget
+nvm use // optional
+npm install
+npm run dev
+```
