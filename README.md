@@ -56,7 +56,7 @@ If you’d like to work with this repository directly, simply clone it and insta
 ```bash
 git clone https://github.com/asimov-protocol/asimov-map-widget.git
 cd asimov-map-widget
-nvm use // optional
+nvm use # optional
 npm install
 npm run dev
 ```
