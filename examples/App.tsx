@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { MapView } from './lib/components/Map';
+import { MapView } from '../src/lib/Map';
 
 function App() {
   const [sparqlData, setSparqlData] = useState(null);
